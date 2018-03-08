@@ -8,7 +8,9 @@ public class Definitions
     {
         Null = -1,
         Idle,
-        Attack
+        Attack,
+        Pickup,
+        Run
     }
 
 
