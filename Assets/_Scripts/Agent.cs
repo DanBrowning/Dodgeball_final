@@ -4,25 +4,34 @@ using UnityEngine;
 
 public class Agent : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-		
-	}
+    public Material _blue;
+    public Material _red;
+    public MeshRenderer rend;
+
+    // Use this for initialization
+    void Start ()
+    {
+        rend = GetComponent<MeshRenderer>();
+    }
 	
 	// Update is called once per frame
-	void Update () {
+	void Update ()
+    {
 		
 	}
 
-    private void OnTriggerStay(Collider other)
+    public void OnTriggerStay(Collider other)
     {
         if (other.gameObject.tag == "Blue")
         {
+            Debug.Log("Blue");
+            rend.material = _blue;
             
         }
         else if (other.gameObject.tag == "Red")
         {
-
+            rend.material = _red;
+            Debug.Log("red");
         }
     }
 }
