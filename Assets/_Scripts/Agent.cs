@@ -7,11 +7,33 @@ public class Agent : MonoBehaviour {
     public Material _blue;
     public Material _red;
     public MeshRenderer rend;
+    private Rigidbody m_rb = null;
+
+    public float m_linearMaxSpeed = 0.0f;
+    public float m_angularMaxSpeed = 0.0f;
+
+    public float m_linearAcceleration = 0.0f;
+    public float m_angularAcceleration = 0.0f;
+
+    public float linearSpeed
+    {
+        get;
+        set;
+    }
+
+    public float angularSpeed
+    {
+        get;
+        set;
+    }
 
     // Use this for initialization
     void Start ()
     {
         rend = GetComponent<MeshRenderer>();
+        m_rb = GetComponent<Rigidbody>();
+        linearSpeed = 0.0f;
+        angularSpeed = 0.0f;
     }
 	
 	// Update is called once per frame
@@ -24,14 +46,55 @@ public class Agent : MonoBehaviour {
     {
         if (other.gameObject.tag == "Blue")
         {
-            Debug.Log("Blue");
             rend.material = _blue;
             
         }
         else if (other.gameObject.tag == "Red")
         {
             rend.material = _red;
-            Debug.Log("red");
         }
+    }
+
+    public void MoveForwards()
+    {
+        m_rb.velocity = transform.forward * linearSpeed;
+    }
+
+    public void MoveBackwards()
+    {
+        m_rb.velocity = transform.forward * linearSpeed * -1.0f;
+    }
+
+    public void StrafeLeft()
+    {
+        m_rb.velocity = transform.right * linearSpeed * -1.0f;
+    }
+
+    public void StrafeRight()
+    {
+        m_rb.velocity = transform.right * linearSpeed;
+    }
+
+    public void TurnRight()
+    {
+        m_rb.angularVelocity = transform.up * angularSpeed;
+    }
+
+    public void TurnLeft()
+    {
+        m_rb.angularVelocity = transform.up * angularSpeed * -1.0f;
+    }
+
+    public void StopLinearVelocity()
+    {
+        Vector3 stopLinearVelocity = m_rb.velocity;
+        stopLinearVelocity.x = 0.0f;
+        stopLinearVelocity.z = 0.0f;
+        m_rb.velocity = stopLinearVelocity;
+    }
+
+    public void StopAngularVelocity()
+    {
+        m_rb.angularVelocity = Vector3.zero;
     }
 }
