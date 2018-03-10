@@ -185,13 +185,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 47321686}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: -10}
+  m_LocalRotation: {x: -0.3768343, y: 0.59875894, z: -0.37773898, w: -0.59732485}
+  m_LocalPosition: {x: 19.401775, y: 27.654022, z: 14.4362545}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -62.640003, z: 0}
 --- !u!1 &81683876
 GameObject:
   m_ObjectHideFlags: 0
@@ -415,8 +415,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 437342536}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.29, y: 0.49, z: 0}
-  m_LocalScale: {x: 0.45903867, y: 0.23042747, z: 0.7816109}
+  m_LocalPosition: {x: -0.007, y: 0.49, z: 0.357}
+  m_LocalScale: {x: 0.67215776, y: 0.23042747, z: 0.3641092}
   m_Children: []
   m_Father: {fileID: 1466383386}
   m_RootOrder: 0
@@ -529,7 +529,7 @@ GameObject:
   - component: {fileID: 706125356}
   - component: {fileID: 706125355}
   m_Layer: 8
-  m_Name: Sphere
+  m_Name: Ball
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -595,7 +595,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 706125350}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7.11, y: 0.55, z: 2.37}
+  m_LocalPosition: {x: -6.51, y: 0.55, z: 2.37}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -918,8 +918,9 @@ GameObject:
   - component: {fileID: 1466383388}
   - component: {fileID: 1466383387}
   - component: {fileID: 1466383389}
+  - component: {fileID: 1466383390}
   m_Layer: 0
-  m_Name: Capsule
+  m_Name: Agent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1007,7 +1008,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 84
   m_CollisionDetection: 0
 --- !u!114 &1466383388
 MonoBehaviour:
@@ -1023,10 +1024,10 @@ MonoBehaviour:
   _blue: {fileID: 2100000, guid: 3a001ec0f596b8c48bc3a0d9dd6b1b9a, type: 2}
   _red: {fileID: 2100000, guid: 9b42b078a1afe464d8a0c7f409944c7d, type: 2}
   rend: {fileID: 1466383383}
-  m_linearMaxSpeed: 0
-  m_angularMaxSpeed: 0
-  m_linearAcceleration: 0
-  m_angularAcceleration: 0
+  m_linearMaxSpeed: 2
+  m_angularMaxSpeed: 2
+  m_linearAcceleration: 2
+  m_angularAcceleration: 2
 --- !u!114 &1466383389
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1044,6 +1045,21 @@ MonoBehaviour:
   m_maxSpeedDistance: 5
   m_destinationBuffer: 2
   m_scanDistance: 10
+--- !u!114 &1466383390
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1466383382}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0ebf67f54f07594ea1313bcf771c2a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canHold: 1
+  item: {fileID: 0}
+  Holding: {fileID: 2063050201}
+  ThrowSpeed: 50
 --- !u!1 &2063050200
 GameObject:
   m_ObjectHideFlags: 0
@@ -1052,6 +1068,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 2063050201}
+  - component: {fileID: 2063050202}
   m_Layer: 0
   m_Name: Holding
   m_TagString: Untagged
@@ -1065,10 +1082,22 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2063050200}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalPosition: {x: -0.079, y: 0, z: 1.6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1466383386}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+--- !u!65 &2063050202
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2063050200}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.3535993, y: 1, z: 1.1422081}
+  m_Center: {x: 0.0032218695, y: 0, z: 0.8110404}

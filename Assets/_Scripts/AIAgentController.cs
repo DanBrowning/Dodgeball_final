@@ -99,18 +99,10 @@ public class AIAgentController : MonoBehaviour {
         float rightToDestinationDot = Vector3.Dot(m_agent.transform.right, toDestination);
         float toDestinationAngle = Mathf.Rad2Deg * Mathf.Acos(lookAtToDestinationDot);
         
-        List<float> speedConsiderations = new List<float>();
-
-        float distanceConsideration = CalculateConsiderationValue(distanceToDestination,m_destinationBuffer, m_maxSpeedDistance);
-        float angleConsideration = CalculateConsiderationValue(toDestinationAngle, m_minAngularSpeedAngle, m_maxAngularSpeedAngle);
-        float speedAngleConsideration = 1.0f - angleConsideration;
-        speedConsiderations.Add(distanceConsideration);
-        speedConsiderations.Add(speedAngleConsideration);
-
-        float speed = CalculateConsiderationUtil(speedConsiderations) * m_agent.m_linearMaxSpeed;
+        float speed =  m_agent.m_linearMaxSpeed;
         m_agent.linearSpeed = speed;
 
-        float angularSpeed = angleConsideration * m_agent.m_angularMaxSpeed;
+        float angularSpeed = m_agent.m_angularMaxSpeed;
         m_agent.angularSpeed = angularSpeed;
 
         //how do we face our destination
