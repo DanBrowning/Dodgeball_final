@@ -129,9 +129,9 @@ public class Ball :MonoBehaviour {
 
     private void OnCollisionEnter(Collision other)
     {
-        if (other.gameObject.tag == "Blue")
+        if (other.gameObject.tag == "Blue (Instance)")
         {
-            gameObject.tag = "Blue";
+            gameObject.tag = "Blue (Instance)";
         }
         else if (other.gameObject.tag == "Red")
         {

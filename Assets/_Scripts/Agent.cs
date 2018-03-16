@@ -45,7 +45,7 @@ public class Agent : MonoBehaviour {
 
     public void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.tag == "Blue")
+        if (other.gameObject.tag == "Blue (Instance)")
         {
             rend.material = _blue;
         }
@@ -104,9 +104,12 @@ public class Agent : MonoBehaviour {
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag != rend.material.color.ToString())
+        if (collision.gameObject.tag != rend.material.name)
         {
+            Debug.Log(collision.gameObject.tag);
+            Debug.Log(rend.material.name);
             catchProb = Random.Range(1,3);
+            Debug.Log(catchProb);
             if (catchProb == 1)
             {
                 Destroy(gameObject);
