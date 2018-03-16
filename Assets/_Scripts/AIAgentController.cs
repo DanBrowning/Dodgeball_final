@@ -36,7 +36,7 @@ public class AIAgentController : MonoBehaviour {
         if(m_isRunning)
         {
             ScanForObjects();
-            MoveTowardsDestination();
+            MoveTowardsDestination(); 
         }
         else
         {
@@ -60,27 +60,6 @@ public class AIAgentController : MonoBehaviour {
         }
 
         return m_pathList.Count > 0;
-    }
-
-    float CalculateConsiderationValue(float val, float min, float max )
-    {
-        float range = max - min;
-        float value = Mathf.Clamp(val, min, max);
-        float considerationValue = (value - min) / range;
-        return considerationValue;
-    }
-
-    float CalculateConsiderationUtil(List<float> considerationList)
-    {
-        float numConsiderations = (float)considerationList.Count;
-        float finalScore = numConsiderations > 0.0f ? 1.0f : 0.0f;
-        foreach (float considerationScore in considerationList)
-        {
-            float modificationFactor = 1.0f - (1.0f / numConsiderations);
-            float makeupValue = (1.0f - considerationScore) * modificationFactor;
-            finalScore *= considerationScore + (makeupValue * considerationScore);
-        }
-        return finalScore;
     }
 
     void MoveTowardsDestination()
@@ -153,7 +132,7 @@ public class AIAgentController : MonoBehaviour {
         }
 
         Vector3 agentPosition = m_agent.transform.position;
-        int layer = LayerMask.NameToLayer("Interactable");
+        int layer = LayerMask.NameToLayer("Ball");
         int layerMask = 1 << layer;
         Collider[] hitColliders = Physics.OverlapSphere(agentPosition, m_scanDistance, layerMask);
         foreach(Collider hitCollider in hitColliders)

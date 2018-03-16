@@ -1,11 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class RunState : BaseState
 {
     private AIAgent _owner;
     private float _elapseTime;
+    private float _probability;
 
     public RunState(AIAgent owner)
     {
@@ -28,4 +30,5 @@ public class RunState : BaseState
     {
         _elapseTime += Time.deltaTime;
     }
+
 }

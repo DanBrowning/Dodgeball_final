@@ -14,6 +14,7 @@ public class Agent : MonoBehaviour {
 
     public float m_linearAcceleration = 0.0f;
     public float m_angularAcceleration = 0.0f;
+    private int catchProb;
 
     public float linearSpeed
     {
@@ -47,7 +48,6 @@ public class Agent : MonoBehaviour {
         if (other.gameObject.tag == "Blue")
         {
             rend.material = _blue;
-            
         }
         else if (other.gameObject.tag == "Red")
         {
@@ -96,5 +96,25 @@ public class Agent : MonoBehaviour {
     public void StopAngularVelocity()
     {
         m_rb.angularVelocity = Vector3.zero;
+    }
+
+    //agents target ball of their colour tag
+
+
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag != rend.material.color.ToString())
+        {
+            catchProb = Random.Range(1,3);
+            if (catchProb == 1)
+            {
+                Destroy(gameObject);
+            }
+            else
+            {
+                Grab.instance.Pickup();
+            }
+        }
     }
 }

@@ -8,6 +8,8 @@ public class Grab :MonoBehaviour
     public Transform Holding;
     public float ThrowSpeed;
 
+    static Grab _instance = null;
+
     private void Start()
     {
         
@@ -23,7 +25,7 @@ public class Grab :MonoBehaviour
 
     void OnTriggerEnter(Collider collider)
     {
-        if (collider.gameObject.layer == 8)
+        if (collider.gameObject.layer == 9)
             if (!item)
             {
                 item = collider.gameObject;
@@ -33,7 +35,7 @@ public class Grab :MonoBehaviour
 
     void OnTriggerExit(Collider collider)
     {
-        if (collider.gameObject.layer == 8)
+        if (collider.gameObject.layer == 9)
         {
             if (canHold)
                 item = null;
@@ -41,7 +43,7 @@ public class Grab :MonoBehaviour
     }
 
 
-    private void Pickup()
+    public void Pickup()
     {
         if (!item)
             return;
@@ -72,5 +74,11 @@ public class Grab :MonoBehaviour
         Holding.GetChild(0).parent = null;
 
             canHold = true;
+    }
+
+    public static Grab instance
+    {
+        get { return _instance; }
+        set { _instance = value; }
     }
 }
