@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -937,7 +937,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 706125350}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.51, y: 6.7, z: 2.37}
+  m_LocalPosition: {x: -6.51, y: 15.16, z: 2.37}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -983,8 +983,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_force: 0
   m_desiredDestination: {fileID: 0}
-  m_redPost: {fileID: 1710162550}
-  m_bluePost: {fileID: 349770266}
+  m_redPost: {fileID: 0}
+  m_bluePost: {fileID: 0}
 --- !u!1 &1023704922
 GameObject:
   m_ObjectHideFlags: 0
@@ -1402,11 +1402,21 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1232844548}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2920162c6755be0418cf9b7f13770f40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_linearMaxSpeed: 0
+  m_angularMaxSpeed: 0
+  m_linearAcceleration: 0
+  m_angularAcceleration: 0
+  canHold: 1
+  item: {fileID: 0}
+  Holding: {fileID: 0}
+  ThrowSpeed: 0
+  balls:
+  - {fileID: 706125354}
 --- !u!1 &1447032693
 GameObject:
   m_ObjectHideFlags: 0
@@ -1536,6 +1546,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2920162c6755be0418cf9b7f13770f40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_linearMaxSpeed: 0
+  m_angularMaxSpeed: 0
+  m_linearAcceleration: 0
+  m_angularAcceleration: 0
+  canHold: 1
+  item: {fileID: 0}
+  Holding: {fileID: 0}
+  ThrowSpeed: 0
+  balls: []
 --- !u!1 &1466383382
 GameObject:
   m_ObjectHideFlags: 0
@@ -1547,9 +1566,9 @@ GameObject:
   - component: {fileID: 1466383385}
   - component: {fileID: 1466383384}
   - component: {fileID: 1466383383}
-  - component: {fileID: 1466383388}
   - component: {fileID: 1466383387}
   - component: {fileID: 1466383389}
+  - component: {fileID: 1466383388}
   - component: {fileID: 1466383390}
   m_Layer: 0
   m_Name: Agent
@@ -1650,31 +1669,31 @@ MonoBehaviour:
   m_GameObject: {fileID: 1466383382}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a6e528a3759b0b4da339341379f9653, type: 3}
+  m_Script: {fileID: 11500000, guid: 2920162c6755be0418cf9b7f13770f40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _blue: {fileID: 2100000, guid: 3a001ec0f596b8c48bc3a0d9dd6b1b9a, type: 2}
-  _red: {fileID: 2100000, guid: 9b42b078a1afe464d8a0c7f409944c7d, type: 2}
-  rend: {fileID: 1466383383}
-  m_linearMaxSpeed: 2
-  m_angularMaxSpeed: 2
-  m_linearAcceleration: 2
-  m_angularAcceleration: 2
+  m_linearMaxSpeed: 5
+  m_angularMaxSpeed: 0
+  m_linearAcceleration: 5
+  m_angularAcceleration: 0
+  canHold: 1
+  item: {fileID: 0}
+  Holding: {fileID: 0}
+  ThrowSpeed: 0
+  balls:
+  - {fileID: 706125354}
 --- !u!114 &1466383389
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1466383382}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 934e29f593290004d960ddba10aeaf70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_agent: {fileID: 1466383388}
-  m_maxAngularSpeedAngle: 45
-  m_minAngularSpeedAngle: 10
-  m_maxSpeedDistance: 5
+  m_agent: {fileID: 0}
   m_destinationBuffer: 2
   m_scanDistance: 10
 --- !u!114 &1466383390
@@ -1685,13 +1704,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 1466383382}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e0ebf67f54f07594ea1313bcf771c2a5, type: 3}
+  m_Script: {fileID: 11500000, guid: 9a6e528a3759b0b4da339341379f9653, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canHold: 1
-  item: {fileID: 706125350}
-  Holding: {fileID: 2063050201}
-  ThrowSpeed: 50
+  _blue: {fileID: 2100000, guid: 3a001ec0f596b8c48bc3a0d9dd6b1b9a, type: 2}
+  _red: {fileID: 2100000, guid: 9b42b078a1afe464d8a0c7f409944c7d, type: 2}
+  rend: {fileID: 0}
+  m_linearMaxSpeed: 5
+  m_angularMaxSpeed: 0
+  m_linearAcceleration: 5
+  m_angularAcceleration: 0
 --- !u!1 &1581475984
 GameObject:
   m_ObjectHideFlags: 0
