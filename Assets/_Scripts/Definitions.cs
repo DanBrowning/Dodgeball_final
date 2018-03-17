@@ -10,11 +10,10 @@ public class Definitions
         Idle,
         Attack,
         Pickup,
-        Run
+        Run,
+        Defense
     }
 
-
     public StateName statename { get; set; }
-
 
 }

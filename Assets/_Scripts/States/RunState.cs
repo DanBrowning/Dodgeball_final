@@ -17,6 +17,7 @@ public class RunState : BaseState
     public override void OnEnter()
     {
         Debug.Log("Enter Run");
+
         _elapseTime = 0;
     }
 
@@ -29,7 +30,7 @@ public class RunState : BaseState
     {
         _elapseTime += Time.deltaTime;
 
-        Transform closestBall = GetClosestBall();
+        Transform closestBall = NearestBall(_owner.balls);
 
         _owner.targetBall = closestBall;
 
@@ -40,10 +41,35 @@ public class RunState : BaseState
             if (!_owner.hasBall)
             {
                 _owner.MoveForward(direction.normalized);
-                CanGrabBall();
+                _owner.Pickup();
             }
         }
 
+        if (!closestBall)
+        {
+            _owner.SwitchState(Definitions.StateName.Defense);
+        }
+        
+    }
+
+    public Transform NearestBall(List<Transform> allBalls)
+    {
+        Transform closestBall = null;
+
+        float closestDistance = Mathf.Infinity;
+
+        foreach (Transform ball in allBalls)
+        {
+            float checkDistance = Vector3.Distance(_owner.transform.position, ball.position);
+
+            if (checkDistance < closestDistance && ball.tag == _owner.gameObject.tag)
+            {
+                closestBall = ball;
+                closestDistance = checkDistance;
+            }
+        }
+
+        return closestBall;
     }
 
 }

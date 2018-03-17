@@ -48,6 +48,7 @@ public class Agent : MonoBehaviour {
         if (other.gameObject.tag == "Blue (Instance)")
         {
             rend.material = _blue;
+            gameObject.tag = "Blue (Instance)";
         }
         else if (other.gameObject.tag == "Red")
         {

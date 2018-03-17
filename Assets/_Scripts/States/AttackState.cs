@@ -7,6 +7,8 @@ public class AttackState : BaseState
     private AIAgent _owner;
     private float _elapseTime;
 
+    
+
     public AttackState(AIAgent owner)
     {
         _owner = owner;
@@ -27,5 +29,33 @@ public class AttackState : BaseState
     public override void OnUpdate()
     {
         _elapseTime += Time.deltaTime;
+
+        if (Vector3.Distance(_owner.transform.position, _owner.targetAgent.position) < 10)
+        {
+            Throw();
+        }
+        else
+        {
+            _owner.GetDirectionToTarget(_owner.transform.position,_owner.targetBall.position);
+        }
+    }
+
+    public void Throw()
+    {
+        if (!_owner.item)
+            return;
+
+        Debug.Log("Throw");
+
+        _owner.item.GetComponent<Rigidbody>().isKinematic = false;
+        _owner.item.GetComponent<Rigidbody>().useGravity = true;
+        _owner.item = null;
+        _owner.Holding.GetChild(0).gameObject.GetComponent<Rigidbody>().velocity = _owner.transform.position * _owner.ThrowSpeed;
+        _owner.Holding.GetChild(0).parent = null;
+        {
+            _owner.canHold = true;
+        }
+
+        _owner.SwitchState(Definitions.StateName.Defense);
     }
 }

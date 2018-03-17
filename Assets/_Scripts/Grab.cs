@@ -22,7 +22,7 @@ public class Grab : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Alpha9))
         {
-            Throw();
+            //_owner.Throw();
         }
     }
 
@@ -62,7 +62,7 @@ public class Grab : MonoBehaviour
             canHold = false;
     }
 
-    private void Throw()
+    /*private void Throw()
     {
         if (!item)
             return;
@@ -80,7 +80,7 @@ public class Grab : MonoBehaviour
         }
 
         _owner.SwitchState(Definitions.StateName.Defend);
-    }
+    }*/
 
     public static Grab instance
     {
