@@ -7,7 +7,6 @@ public class RunState : BaseState
 {
     private AIAgent _owner;
     private float _elapseTime;
-    private float _probability;
 
     public RunState(AIAgent owner)
     {
@@ -29,6 +28,22 @@ public class RunState : BaseState
     public override void OnUpdate()
     {
         _elapseTime += Time.deltaTime;
+
+        Transform closestBall = GetClosestBall();
+
+        _owner.targetBall = closestBall;
+
+        if (_owner.targetBall != null)
+        {
+            Vector3 direction = _owner.GetDirectionToTarget(_owner.transform.position,_owner.targetBall.position);
+
+            if (!_owner.hasBall)
+            {
+                _owner.MoveForward(direction.normalized);
+                CanGrabBall();
+            }
+        }
+
     }
 
 }

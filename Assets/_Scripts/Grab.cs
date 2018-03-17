@@ -1,7 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Grab :MonoBehaviour
+// move all to AIAgent script
+
+
+public class Grab : MonoBehaviour
 {
     public bool canHold = true;
     public GameObject item;
@@ -19,7 +22,7 @@ public class Grab :MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Alpha9))
         {
-            Drop();
+            Throw();
         }
     }
 
@@ -59,12 +62,12 @@ public class Grab :MonoBehaviour
             canHold = false;
     }
 
-    private void Drop()
+    private void Throw()
     {
         if (!item)
             return;
 
-        Debug.Log("Drop");
+        Debug.Log("Throw");
 
         item.GetComponent<Rigidbody>().isKinematic = false;
         item.GetComponent<Rigidbody>().useGravity = true;
@@ -72,8 +75,11 @@ public class Grab :MonoBehaviour
         Holding.GetChild(0).gameObject.GetComponent<Rigidbody>().velocity = transform.forward * ThrowSpeed;
 
         Holding.GetChild(0).parent = null;
-
+        {
             canHold = true;
+        }
+
+        _owner.SwitchState(Definitions.StateName.Defend);
     }
 
     public static Grab instance

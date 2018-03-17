@@ -10,10 +10,6 @@ public class AIAgentController : MonoBehaviour {
 
     public Agent m_agent = null;
 
-    public float m_maxAngularSpeedAngle = 45.0f;
-    public float m_minAngularSpeedAngle = 10.0f;
-
-    public float m_maxSpeedDistance = 5.0f;
     public float m_destinationBuffer = 2.0f;
     public float m_scanDistance = 10.0f;
 
@@ -102,25 +98,16 @@ public class AIAgentController : MonoBehaviour {
         }
     }
 
-    void OnDestinationFound(Vector3 destination)
+    public Vector3 OnDestinationFound(Vector3 destination)
     {
         NavMeshPath path = new NavMeshPath();
         bool isSuccess = NavMesh.CalculatePath(m_agent.transform.position, destination, NavMesh.AllAreas, path);
         if(isSuccess)
         {
-            //draw out the path
-            //set the destination
-            foreach(Vector3 pathNode in path.corners)
-            {
-                m_pathList.Add(pathNode);
-                Debug.Log("Path Pos: " + pathNode);
-            }
-
-            foreach (Vector3 dest in m_pathList)
-            {
-                Debug.Log("List Pos: " + dest);
-            }
+            return destination - m_agent.transform.position;
         }
+
+        return Vector3.zero;
     }
 
     void ScanForObjects()

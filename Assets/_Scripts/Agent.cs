@@ -108,7 +108,7 @@ public class Agent : MonoBehaviour {
         {
             Debug.Log(collision.gameObject.tag);
             Debug.Log(rend.material.name);
-            catchProb = Random.Range(1,3);
+            catchProb = Random.Range(1,4);
             Debug.Log(catchProb);
             if (catchProb == 1)
             {

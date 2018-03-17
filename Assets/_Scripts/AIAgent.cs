@@ -6,9 +6,25 @@ public class AIAgent : MonoBehaviour {
 
     private StateManager _stateManager;
 
+    private Transform _targetBall = null;
+    private Transform _targetAgent = null;
 
-	// Use this for initialization
-	void Start ()
+    public Transform targetBall
+    {
+        get { return _targetBall; }
+        set { _targetBall = value; }
+    }
+
+    public Transform targetAgent
+    {
+        get { return _targetAgent; }
+        set { _targetAgent = value; }
+    }
+
+    public bool hasBall { get; set; }
+
+    // Use this for initialization
+    void Start ()
     {
         _stateManager = new StateManager();
         _stateManager.AddState(new IdleState(this));
