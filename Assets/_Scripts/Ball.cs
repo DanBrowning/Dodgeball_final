@@ -12,6 +12,10 @@ public class Ball :MonoBehaviour {
     public Transform m_redPost;
     public Transform m_bluePost;
 
+    public bool canHold = true;
+    public GameObject item;
+    public Transform Holding;
+
     private Rigidbody m_rb = null;
 
     enum EFrictionType
@@ -82,5 +86,13 @@ public class Ball :MonoBehaviour {
         }
     }
 
-    
+    public void PickUp(Transform parent)
+    {
+        Debug.Log("Grab");
+
+        m_rb.isKinematic = true;
+        GetComponent<Collider>().enabled = false;
+        transform.position = parent.position;
+        transform.parent = parent;
+    }
 }

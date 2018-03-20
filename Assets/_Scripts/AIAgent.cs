@@ -23,7 +23,11 @@ public class AIAgent : MonoBehaviour {
     public Transform Holding;
     public float ThrowSpeed;
 
-    public List<Transform> balls; 
+    public List<Transform> balls;
+
+    public Material _blue;
+    public Material _red;
+    public MeshRenderer rend;
 
     public float linearSpeed
     {
@@ -93,13 +97,11 @@ public class AIAgent : MonoBehaviour {
         {
             SwitchState(Definitions.StateName.Run);
         }
-
-        GetDirectionToTarget(towards);
 	}
 
     public void MoveForward(Vector3 direction)
     {
-        m_rb.velocity = transform.forward * linearSpeed;
+        m_rb.velocity = direction * linearSpeed;
     }
 
     public void MoveBackward()
@@ -134,28 +136,49 @@ public class AIAgent : MonoBehaviour {
 
     public Vector3 GetDirectionToTarget(Vector3 position, Vector3 target)
     {
-        Vector3 towards = transform.position - targetBall.position;
+        Vector3 towards = target - position;
 
         return towards;
     }
 
-
-
     public void Pickup()
     {
-        if (!item)
-            return;
-
-        Debug.Log("Grab");
-
-        item.transform.SetParent(Holding);
-        item.GetComponent<Rigidbody>().useGravity = false;
-        item.GetComponent<Rigidbody>().isKinematic = true;
-        item.transform.localRotation = transform.rotation;
-        item.transform.position = Holding.position;
-
+        targetBall.GetComponent<Ball>().PickUp(Holding);
         canHold = false;
 
         SwitchState(Definitions.StateName.Attack);
+    }
+
+    public void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject.tag == "Blue (Instance)")
+        {
+            rend.material = _blue;
+            gameObject.tag = "Blue (Instance)";
+        }
+        else if (other.gameObject.tag == "Red")
+        {
+            rend.material = _red;
+        }
+    }
+
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag != rend.material.name)
+        {
+            Debug.Log(collision.gameObject.tag);
+            Debug.Log(rend.material.name);
+            catchProb = Random.Range(1, 4);
+            Debug.Log(catchProb);
+            if (catchProb == 1)
+            {
+                Destroy(gameObject);
+            }
+            else
+            {
+                Grab.instance.Pickup();
+            }
+        }
     }
 }

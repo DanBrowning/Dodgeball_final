@@ -41,7 +41,7 @@ public class RunState : BaseState
             if (!_owner.hasBall)
             {
                 _owner.MoveForward(direction.normalized);
-                _owner.Pickup();
+                
             }
         }
 
@@ -71,5 +71,4 @@ public class RunState : BaseState
 
         return closestBall;
     }
-
 }
