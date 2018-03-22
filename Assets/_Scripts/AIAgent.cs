@@ -24,10 +24,17 @@ public class AIAgent : MonoBehaviour {
     public float ThrowSpeed;
 
     public List<Transform> balls;
+    public List<Transform> targets;
 
     public Material _blue;
     public Material _red;
     public MeshRenderer rend;
+
+    public bool isOut
+    {
+        get;
+        private set;
+    }
 
     public float linearSpeed
     {
@@ -63,12 +70,13 @@ public class AIAgent : MonoBehaviour {
         _stateManager = new StateManager();
         _stateManager.AddState(new IdleState(this));
         _stateManager.AddState(new AttackState(this));
-        _stateManager.AddState(new PickupState(this));
+        _stateManager.AddState(new DefenseState(this));
         _stateManager.AddState(new RunState(this));
-        _stateManager.desiredState = Definitions.StateName.Idle;
+        _stateManager.desiredState = Definitions.StateName.Run;
 
         linearSpeed = 5;
 
+        isOut = false;
 	}
 	
 	// Update is called once per frame
@@ -93,11 +101,21 @@ public class AIAgent : MonoBehaviour {
 
         _stateManager.Update();
 
-        if (_stateManager.currentState.GetStateName() != Definitions.StateName.Run && canHold)
+        /*if (_stateManager.currentState.GetStateName() != Definitions.StateName.Run && canHold)
         {
             SwitchState(Definitions.StateName.Run);
+        }*/
+        int outCount = 0;
+        foreach (Transform agent in targets)
+            if (agent.GetComponent<AIAgent>().isOut)
+                outCount++;
+
+        if (outCount >= targets.Count)
+        {
+            Winning();
         }
-	}
+
+    }
 
     public void MoveForward(Vector3 direction)
     {
@@ -143,29 +161,35 @@ public class AIAgent : MonoBehaviour {
 
     public void Pickup()
     {
-        targetBall.GetComponent<Ball>().PickUp(Holding);
-        canHold = false;
+        if (gameObject.tag == rend.material.name)
+        {
+            targetBall.GetComponent<Ball>().PickUp(Holding);
+            canHold = false;
 
-        SwitchState(Definitions.StateName.Attack);
+            MoveForward(Vector3.zero);
+
+            SwitchState(Definitions.StateName.Attack);
+        }
     }
 
     public void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.tag == "Blue (Instance)")
+        if (other.gameObject.tag == "Blue (Instance)" && other.gameObject.layer != 9)
         {
             rend.material = _blue;
             gameObject.tag = "Blue (Instance)";
         }
-        else if (other.gameObject.tag == "Red")
+        else if (other.gameObject.tag == "Red (Instance)" && other.gameObject.layer != 9)
         {
             rend.material = _red;
+            gameObject.tag = "Red (Instance)";
         }
     }
 
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag != rend.material.name)
+        if (collision.gameObject.tag != rend.material.name && collision.gameObject.tag != "Barrier")
         {
             Debug.Log(collision.gameObject.tag);
             Debug.Log(rend.material.name);
@@ -173,12 +197,21 @@ public class AIAgent : MonoBehaviour {
             Debug.Log(catchProb);
             if (catchProb == 1)
             {
-                Destroy(gameObject);
+                isOut = true;
+                GetComponent<Renderer>().enabled = false;
+                GetComponent<Collider>().enabled = false;
+                this.enabled = false;
             }
             else
             {
-                Grab.instance.Pickup();
+                Debug.Log("pick the fucking thing up");
+                Pickup();
             }
         }
+    }
+
+    public void Winning()
+    {
+        GameObject.FindGameObjectWithTag("WinCan").GetComponentInChildren<Score>().win(GetComponent<Renderer>().material.color);
     }
 }

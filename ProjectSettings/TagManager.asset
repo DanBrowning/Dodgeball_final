@@ -7,6 +7,9 @@ TagManager:
   - Red
   - Blue
   - Blue (Instance)
+  - Red (Instance)
+  - Barrier
+  - WinCan
   layers:
   - Default
   - TransparentFX

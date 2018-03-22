@@ -15,18 +15,24 @@ public class DefenseState :BaseState
 
     public override void OnEnter()
     {
-        Debug.Log("Enter Defense");
+        Debug.Log(_owner.gameObject.name + " Enter Defense");
         _elapseTime = 0;
     }
 
     public override void OnExit()
     {
-        Debug.Log("Exit Defense " + _elapseTime);
+        Debug.Log(_owner.gameObject.name + " Exit Defense " + _elapseTime);
     }
 
     public override void OnUpdate()
     {
         _elapseTime += Time.deltaTime;
+
+        foreach (Transform ball in _owner.balls)
+        {
+            if (ball.tag == _owner.tag)
+                _owner.SwitchState(Definitions.StateName.Run);
+        }
     }
 
 

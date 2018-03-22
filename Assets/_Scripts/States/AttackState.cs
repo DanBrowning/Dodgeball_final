@@ -7,7 +7,7 @@ public class AttackState : BaseState
     private AIAgent _owner;
     private float _elapseTime;
 
-    
+    public float ThrowSpeed = 50;
 
     public AttackState(AIAgent owner)
     {
@@ -17,45 +17,71 @@ public class AttackState : BaseState
 
     public override void OnEnter()
     {
-        Debug.Log("Enter Attack");
+        Debug.Log(_owner.gameObject.name + " Enter Attack");
         _elapseTime = 0;
+
     }
 
     public override void OnExit()
     {
-        Debug.Log("Exit Attack " + _elapseTime);
+        Debug.Log(_owner.gameObject.name + " Exit Attack " + _elapseTime);
     }
 
     public override void OnUpdate()
     {
         _elapseTime += Time.deltaTime;
 
-        if (Vector3.Distance(_owner.transform.position, _owner.targetAgent.position) < 10)
+        Transform closestTarget = NearestTarget(_owner.targets);
+
+        _owner.targetAgent = closestTarget;
+
+        if (_owner.targetAgent != null)
         {
-            Throw();
-        }
-        else
-        {
-            _owner.GetDirectionToTarget(_owner.transform.position,_owner.targetBall.position);
+            if (Vector3.Distance(_owner.transform.position, _owner.targetAgent.position) < Mathf.Infinity)
+            {
+
+                Throw();
+                _owner.SwitchState(Definitions.StateName.Defense);
+            }
+            else
+            {
+                Vector3 direction = _owner.GetDirectionToTarget(_owner.transform.position, _owner.targetBall.position);
+                _owner.MoveForward(direction);
+            }
         }
     }
 
     public void Throw()
     {
-        if (!_owner.item)
-            return;
-
-        Debug.Log("Throw");
-
-        _owner.item.GetComponent<Rigidbody>().isKinematic = false;
-        _owner.item.GetComponent<Rigidbody>().useGravity = true;
-        _owner.item = null;
-        _owner.Holding.GetChild(0).gameObject.GetComponent<Rigidbody>().velocity = _owner.transform.position * _owner.ThrowSpeed;
-        _owner.Holding.GetChild(0).parent = null;
-        {
-            _owner.canHold = true;
-        }
+        float speed = _owner.ThrowSpeed;
+        Vector3 direction = _owner.GetDirectionToTarget(_owner.transform.position, _owner.targetAgent.position);
+        _owner.targetBall.GetComponent<Ball>().Throw(speed, direction);
 
         _owner.SwitchState(Definitions.StateName.Defense);
+    }
+
+    public Transform NearestTarget(List<Transform> allTargets)
+    {
+       Transform closestTarget = null;
+
+        float closestDistance = Mathf.Infinity;
+
+        foreach (Transform target in allTargets)
+        {
+            if (target.GetComponent<AIAgent>().isOut)
+                continue;
+
+            float checkDistance = Vector3.Distance(_owner.transform.position, target.position);
+
+            if (checkDistance < closestDistance && target.tag != _owner.gameObject.tag)
+            {
+                closestTarget = target;
+                closestDistance = checkDistance;
+            }
+        }
+
+        
+
+        return closestTarget;
     }
 }

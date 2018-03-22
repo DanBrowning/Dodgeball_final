@@ -16,14 +16,14 @@ public class RunState : BaseState
 
     public override void OnEnter()
     {
-        Debug.Log("Enter Run");
+        Debug.Log(_owner.gameObject.name + " Enter Run");
 
         _elapseTime = 0;
     }
 
     public override void OnExit()
     {
-        Debug.Log("Exit Run " + _elapseTime);
+        Debug.Log(_owner.gameObject.name + " Exit Run " + _elapseTime);
     }
 
     public override void OnUpdate()
@@ -41,15 +41,20 @@ public class RunState : BaseState
             if (!_owner.hasBall)
             {
                 _owner.MoveForward(direction.normalized);
-                
+                if (Vector3.Distance(_owner.transform.position, _owner.targetBall.position) < 1.5f)
+                {
+                    _owner.Pickup();
+                    _owner.SwitchState(Definitions.StateName.Attack);
+                }
             }
+
+
         }
 
         if (!closestBall)
         {
-            _owner.SwitchState(Definitions.StateName.Defense);
+            //_owner.SwitchState(Definitions.StateName.Defense);
         }
-        
     }
 
     public Transform NearestBall(List<Transform> allBalls)
@@ -60,6 +65,11 @@ public class RunState : BaseState
 
         foreach (Transform ball in allBalls)
         {
+            if (ball.GetComponent<Ball>().isAirborn)
+            {
+                continue;
+            }
+
             float checkDistance = Vector3.Distance(_owner.transform.position, ball.position);
 
             if (checkDistance < closestDistance && ball.tag == _owner.gameObject.tag)

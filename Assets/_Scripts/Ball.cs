@@ -12,9 +12,13 @@ public class Ball :MonoBehaviour {
     public Transform m_redPost;
     public Transform m_bluePost;
 
-    public bool canHold = true;
-    public GameObject item;
-    public Transform Holding;
+    //public bool canHold = true;
+    //public GameObject item;
+    //public Transform Holding;
+
+    public bool isAirborn;
+
+    public float throwSpeed = 50;
 
     private Rigidbody m_rb = null;
 
@@ -47,9 +51,9 @@ public class Ball :MonoBehaviour {
 
     // Use this for initialization
     void Start() {
+
+        isAirborn = false;
         m_rb = GetComponent<Rigidbody>();
-        //Collider coll = GetComponent<Collider>();
-        //coll.material.dynamicFriction;
     }
 
     // Update is called once per frame
@@ -79,11 +83,15 @@ public class Ball :MonoBehaviour {
         if (other.gameObject.tag == "Blue (Instance)")
         {
             gameObject.tag = "Blue (Instance)";
+            isAirborn = false;
         }
-        else if (other.gameObject.tag == "Red")
+        else if (other.gameObject.tag == "Red (Instance)")
         {
-            gameObject.tag = "Red";
+            gameObject.tag = "Red (Instance)";
+            isAirborn = false;
         }
+
+        isAirborn = false;
     }
 
     public void PickUp(Transform parent)
@@ -94,5 +102,15 @@ public class Ball :MonoBehaviour {
         GetComponent<Collider>().enabled = false;
         transform.position = parent.position;
         transform.parent = parent;
+    }
+
+    public void Throw(float speed, Vector3 direction)
+    {
+        m_rb.isKinematic = false;
+        GetComponent<Collider>().enabled = true;
+        transform.parent = null;
+        isAirborn = true;
+        direction.y = 2;
+        m_rb.velocity = direction.normalized * speed;
     }
 }

@@ -7,6 +7,8 @@ public class Score : MonoBehaviour {
 
     public Text winner;
 
+    public Canvas canvas;
+
     public bool Red = false;
     public bool Blue = false;
 
@@ -30,6 +32,19 @@ public class Score : MonoBehaviour {
             winner.gameObject.SetActive(true);
             winner.color = Color.blue;
             winner.text = "The Blue Team Wins!";
+        }
+    }
+
+    public void win(Color winColour)
+    {
+        canvas.enabled = true;
+        if (winColour == Color.blue)
+        {
+            Blue = true;
+        }
+        else if (winColour == Color.red)
+        {
+            Red = true;
         }
     }
 }
