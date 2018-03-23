@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class Cannon : MonoBehaviour {
 
-
+    
 
     public float shots;
     public Text remaining;
@@ -19,12 +19,13 @@ public class Cannon : MonoBehaviour {
     public Canvas finished;
     public Canvas lost;
 
-    public float hits = 0;
+    public float hits;
 
     // Use this for initialization
     void Start()
     {
         shots = 5;
+        hits = 0;
     }
 
     // Update is called once per frame
@@ -42,7 +43,7 @@ public class Cannon : MonoBehaviour {
         if (Input.GetKeyUp(KeyCode.Space))
         {
             Instantiate(cannonBall, spawner);
-            shots--;
+            //shots--;
         }
 
         if (hits == 5)
@@ -75,7 +76,7 @@ public class Cannon : MonoBehaviour {
 
     public void Shot()
     {
-        shots --;
+        shots--;
     }
 
     public void Won()

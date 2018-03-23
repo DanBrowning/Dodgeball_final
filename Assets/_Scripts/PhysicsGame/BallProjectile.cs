@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BallProjectile : MonoBehaviour
 {
@@ -13,16 +14,23 @@ public class BallProjectile : MonoBehaviour
     private float m_timeElapsed = 0.0f;
 
     public Transform m_targetTransform;
-    public float m_minSpeed;
+    public float minPowSpeed;
 
     public BasicVelocity m_movingTarget = null;
     public float m_desiredAirTime = 1.0f;
 
+    public Slider power;
+    private bool minPow;
+    private bool maxPow;
+    private bool sliding;
+    private bool lefting;
 
     // Use this for initialization
     void Start()
     {
         m_rb = GetComponent<Rigidbody>();
+        sliding = true;
+        minPow = true;
     }
 
     Vector3 CalculateInitialVelocityMovingTarget()
@@ -31,7 +39,7 @@ public class BallProjectile : MonoBehaviour
         //aim for that position
         Vector3 targetVelocity = m_movingTarget.GetVelocity();
         Vector3 targetDisplacement = targetVelocity * m_desiredAirTime;
-        Vector3 targetPosition = m_movingTarget.transform.position + targetDisplacement;
+        Vector3 targetPosition = m_movingTarget.transform.position + targetDisplacement * power.value;
         return CalculateInitialVelocity(targetPosition, true);
     }
 
@@ -50,7 +58,7 @@ public class BallProjectile : MonoBehaviour
         //vt = d
         //t = d/v
 
-        float horizontalSpeed = useDesiredTime ? horizontalDisplacement / m_desiredAirTime : m_minSpeed;
+        float horizontalSpeed = useDesiredTime ? horizontalDisplacement / m_desiredAirTime : minPowSpeed;
 
         float time = horizontalDisplacement / horizontalSpeed;
         //we know the time it requires to reach the target
@@ -75,11 +83,36 @@ public class BallProjectile : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Debug.Log(sliding);
+        if (sliding)
+        {
+            if (power.value == power.minValue)
+            {
+                minPow = true;
+                maxPow = false;
+                lefting = false;
+            }
+            else if (power.value == power.maxValue)
+            {
+                minPow = false;
+                maxPow = true;
+                lefting = true;
+            }
+
+            if (minPow)
+            {
+                power.value += (Time.deltaTime * 0.15f);
+            }
+            else if (maxPow)
+                power.value -= (Time.deltaTime * 0.15f);
+        }
+
         if (Input.GetKeyDown(KeyCode.Space))
         {
             m_isRunning = !m_isRunning;
             //m_rb.velocity = CalculateInitialVelocity(m_targetTransform.position,false);
             m_rb.velocity = CalculateInitialVelocityMovingTarget();
+            sliding = false;
         }
         
 
@@ -106,6 +139,25 @@ public class BallProjectile : MonoBehaviour
             Destroy(gameObject);
             Destroy(collision.gameObject);
             _shot.Hit();
+            _shot.Shot();
+            sliding = true;
+
+            if (lefting)
+                maxPow = true;
+            else
+                minPow = true;
+        }
+
+        if (collision.gameObject.tag == "backdrop")
+        {
+            Destroy(gameObject);
+            sliding = true;
+            _shot.Shot();
+
+            if (lefting)
+                maxPow = true;
+            else
+                minPow = true;
         }
     }
 
