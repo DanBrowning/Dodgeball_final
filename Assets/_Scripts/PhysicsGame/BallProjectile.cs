@@ -7,7 +7,14 @@ public class BallProjectile : MonoBehaviour
 {
     private Cannon _shot;
 
-    public bool m_isRunning = false;
+    public BallProjectile(Cannon owner)
+    {
+        _shot = owner;
+    }
+
+
+
+    //public bool m_isRunning = false;
     private Rigidbody m_rb = null;
 
     public Vector3 m_initialVelocity = Vector3.zero;
@@ -109,10 +116,10 @@ public class BallProjectile : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            m_isRunning = !m_isRunning;
+            //m_isRunning = !m_isRunning;
             //m_rb.velocity = CalculateInitialVelocity(m_targetTransform.position,false);
-            m_rb.velocity = CalculateInitialVelocityMovingTarget();
-            sliding = false;
+            
+
         }
         
 
@@ -163,5 +170,11 @@ public class BallProjectile : MonoBehaviour
         }
     }
 
-    
+    public void Fire()
+    {
+        m_rb.velocity = CalculateInitialVelocityMovingTarget();
+        sliding = false;
+        m_rb.isKinematic = false;
+        GetComponent<SphereCollider>().enabled = true;
+    }
 }

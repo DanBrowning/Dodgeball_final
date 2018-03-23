@@ -21,6 +21,11 @@ public class Cannon : MonoBehaviour {
 
     public float hits;
 
+    public List<BallProjectile> balls = new List<BallProjectile>();
+    private int ballsIndex = 0;
+
+    
+
     // Use this for initialization
     void Start()
     {
@@ -42,7 +47,7 @@ public class Cannon : MonoBehaviour {
 
         if (Input.GetKeyUp(KeyCode.Space))
         {
-            Instantiate(cannonBall, spawner);
+            //Instantiate(cannonBall, spawner);
             //shots--;
         }
 
@@ -87,5 +92,11 @@ public class Cannon : MonoBehaviour {
     public void Lost()
     {
         lost.enabled = true;
+    }
+
+    public void ThrowBall()
+    {
+        balls[ballsIndex].Fire();
+        ballsIndex++;
     }
 }

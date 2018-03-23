@@ -1619,6 +1619,21 @@ Prefab:
       propertyPath: power
       value: 
       objectReference: {fileID: 1037627594}
+    - target: {fileID: 135653985583083812, guid: b6fc0dc510f1a064ea56acbd6e37830e,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 54293003571498724, guid: b6fc0dc510f1a064ea56acbd6e37830e,
+        type: 2}
+      propertyPath: m_UseGravity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 54293003571498724, guid: b6fc0dc510f1a064ea56acbd6e37830e,
+        type: 2}
+      propertyPath: m_IsKinematic
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b6fc0dc510f1a064ea56acbd6e37830e, type: 2}
   m_IsPrefabParent: 0
@@ -1680,6 +1695,7 @@ MonoBehaviour:
   finished: {fileID: 1690850462}
   lost: {fileID: 1306875912}
   hits: 0
+  balls: []
 --- !u!23 &1494744563
 MeshRenderer:
   m_ObjectHideFlags: 0
