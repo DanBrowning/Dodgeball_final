@@ -12,6 +12,7 @@ TagManager:
   - WinCan
   - Ball
   - Box
+  - backdrop
   layers:
   - Default
   - TransparentFX

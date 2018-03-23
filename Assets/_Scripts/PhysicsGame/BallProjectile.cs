@@ -136,7 +136,7 @@ public class BallProjectile : MonoBehaviour
     {
         if (collision.gameObject.tag == "Box")
         {
-            Destroy(gameObject);
+            
             Destroy(collision.gameObject);
             _shot.Hit();
             _shot.Shot();
@@ -146,11 +146,12 @@ public class BallProjectile : MonoBehaviour
                 maxPow = true;
             else
                 minPow = true;
+            Destroy(gameObject);
         }
 
         if (collision.gameObject.tag == "backdrop")
         {
-            Destroy(gameObject);
+            
             sliding = true;
             _shot.Shot();
 
@@ -158,6 +159,7 @@ public class BallProjectile : MonoBehaviour
                 maxPow = true;
             else
                 minPow = true;
+            Destroy(gameObject);
         }
     }
 
