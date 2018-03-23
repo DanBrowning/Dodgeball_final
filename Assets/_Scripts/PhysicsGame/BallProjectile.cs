@@ -1,10 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class BallProjectile : MonoBehaviour
 {
+    private Cannon _shot;
 
     public bool m_isRunning = false;
     private Rigidbody m_rb = null;
@@ -18,18 +18,6 @@ public class BallProjectile : MonoBehaviour
     public BasicVelocity m_movingTarget = null;
     public float m_desiredAirTime = 1.0f;
 
-    public bool fired;
-
-    public GameObject cannonBall;
-    public Transform spawner;
-
-    public Canvas finished;
-    public Canvas lost;
-
-    public float shots = 7;
-    public Text remaining;
-
-    public List<Transform> targets;
 
     // Use this for initialization
     void Start()
@@ -93,16 +81,8 @@ public class BallProjectile : MonoBehaviour
             //m_rb.velocity = CalculateInitialVelocity(m_targetTransform.position,false);
             m_rb.velocity = CalculateInitialVelocityMovingTarget();
         }
-        else if (Input.GetKeyUp(KeyCode.Space))
-        {
-            Instantiate(cannonBall, spawner);
+        
 
-        }
-
-        if (fired)
-        {
-
-        }
 
         //m_rb.useGravity = m_isRunning;
 
@@ -114,16 +94,9 @@ public class BallProjectile : MonoBehaviour
         /*int targetHit = 0;
         foreach (Transform box in targets)
             if (box.GetComponent<AIAgent>().isOut)
-                targetHit++;
+                targetHit++;*/
 
-        if (targetHit >= targets.Count)
-        {
-            Won();
-        }
-        else if (shots == 0)
-        {
-            Lost();
-        }*/
+        
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -132,16 +105,9 @@ public class BallProjectile : MonoBehaviour
         {
             Destroy(gameObject);
             Destroy(collision.gameObject);
+            _shot.Hit();
         }
     }
 
-    public void Won()
-    {
-        finished.enabled = true;
-    }
-
-    public void Lost()
-    {
-        lost.enabled = true;
-    }
+    
 }

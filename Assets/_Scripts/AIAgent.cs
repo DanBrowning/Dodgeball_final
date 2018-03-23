@@ -114,7 +114,6 @@ public class AIAgent : MonoBehaviour {
         {
             Winning();
         }
-
     }
 
     public void MoveForward(Vector3 direction)
