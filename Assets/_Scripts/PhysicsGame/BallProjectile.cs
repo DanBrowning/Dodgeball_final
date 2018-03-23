@@ -1,8 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class BallProjectile : MonoBehaviour {
+public class BallProjectile : MonoBehaviour
+{
 
     public bool m_isRunning = false;
     private Rigidbody m_rb = null;
@@ -16,10 +18,24 @@ public class BallProjectile : MonoBehaviour {
     public BasicVelocity m_movingTarget = null;
     public float m_desiredAirTime = 1.0f;
 
-	// Use this for initialization
-	void Start () {
+    public bool fired;
+
+    public GameObject cannonBall;
+    public Transform spawner;
+
+    public Canvas finished;
+    public Canvas lost;
+
+    public float shots = 7;
+    public Text remaining;
+
+    public List<Transform> targets;
+
+    // Use this for initialization
+    void Start()
+    {
         m_rb = GetComponent<Rigidbody>();
-	}
+    }
 
     Vector3 CalculateInitialVelocityMovingTarget()
     {
@@ -28,16 +44,16 @@ public class BallProjectile : MonoBehaviour {
         Vector3 targetVelocity = m_movingTarget.GetVelocity();
         Vector3 targetDisplacement = targetVelocity * m_desiredAirTime;
         Vector3 targetPosition = m_movingTarget.transform.position + targetDisplacement;
-        return CalculateInitialVelocity(targetPosition,true);
+        return CalculateInitialVelocity(targetPosition, true);
     }
 
-    Vector3 CalculateInitialVelocity(Vector3 targetPosition,bool useDesiredTime)
+    Vector3 CalculateInitialVelocity(Vector3 targetPosition, bool useDesiredTime)
     {
         Vector3 displacement = targetPosition - this.transform.position;
         float yDisplacement = displacement.y;
         displacement.y = 0.0f;
         float horizontalDisplacement = displacement.magnitude;
-        if(horizontalDisplacement < Mathf.Epsilon)
+        if (horizontalDisplacement < Mathf.Epsilon)
         {
             return Vector3.zero;
         }
@@ -68,25 +84,64 @@ public class BallProjectile : MonoBehaviour {
         return initialHorizontalVelocity + initialYVelocity;
     }
 
-	// Update is called once per frame
-	void Update () {
-		if(Input.GetKeyDown(KeyCode.Space))
+    // Update is called once per frame
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             m_isRunning = !m_isRunning;
             //m_rb.velocity = CalculateInitialVelocity(m_targetTransform.position,false);
             m_rb.velocity = CalculateInitialVelocityMovingTarget();
         }
+        else if (Input.GetKeyUp(KeyCode.Space))
+        {
+            Instantiate(cannonBall, spawner);
+
+        }
+
+        if (fired)
+        {
+
+        }
 
         //m_rb.useGravity = m_isRunning;
 
-        if(m_rb.velocity.magnitude > 0.0001f)
+        if (m_rb.velocity.magnitude > 0.0001f)
         {
             m_timeElapsed += Time.deltaTime;
         }
-	}
+
+        /*int targetHit = 0;
+        foreach (Transform box in targets)
+            if (box.GetComponent<AIAgent>().isOut)
+                targetHit++;
+
+        if (targetHit >= targets.Count)
+        {
+            Won();
+        }
+        else if (shots == 0)
+        {
+            Lost();
+        }*/
+    }
 
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log("Time Elapsed: " + m_timeElapsed);
+        if (collision.gameObject.tag == "Box")
+        {
+            Destroy(gameObject);
+            Destroy(collision.gameObject);
+        }
+    }
+
+    public void Won()
+    {
+        finished.enabled = true;
+    }
+
+    public void Lost()
+    {
+        lost.enabled = true;
     }
 }

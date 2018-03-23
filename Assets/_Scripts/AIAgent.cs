@@ -204,7 +204,6 @@ public class AIAgent : MonoBehaviour {
             }
             else
             {
-                Debug.Log("pick the fucking thing up");
                 Pickup();
             }
         }

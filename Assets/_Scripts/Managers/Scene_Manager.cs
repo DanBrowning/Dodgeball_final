@@ -5,19 +5,19 @@ using UnityEngine.SceneManagement;
 
 public class Scene_Manager : MonoBehaviour {
 
-    static Scene_Manager _instance = null;
+    //static Scene_Manager _instance = null;
 
     // Use this for initialization
     void Start ()
     {
-        if (instance)
+        /*if (instance)
             DestroyImmediate(gameObject); // destroys the new Game_Manager upon scenes being loaded and keeps the old one
         else
         {
             instance = this;
 
             DontDestroyOnLoad(this);
-        }
+        }*/
     }
 	
 	// Update is called once per frame
@@ -33,7 +33,7 @@ public class Scene_Manager : MonoBehaviour {
 
     public void Player()
     {
-        SceneManager.LoadScene("1P_Scene");
+        SceneManager.LoadScene("onePlayer");
     }
 
     public void Quit()
@@ -46,9 +46,9 @@ public class Scene_Manager : MonoBehaviour {
         SceneManager.LoadScene("Menu");
     }
 
-    public static Scene_Manager instance
+    /*public static Scene_Manager instance
     {
         get { return _instance; }
         set { _instance = value; }
-    }
+    }*/
 }

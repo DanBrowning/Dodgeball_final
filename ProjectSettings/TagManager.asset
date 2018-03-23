@@ -10,6 +10,8 @@ TagManager:
   - Red (Instance)
   - Barrier
   - WinCan
+  - Ball
+  - Box
   layers:
   - Default
   - TransparentFX
