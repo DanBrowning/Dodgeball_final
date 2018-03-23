@@ -11,7 +11,7 @@ public class Cannon : MonoBehaviour {
     public Text remaining;
     public Text score;
 
-    public List<Transform> targets;
+    public List<Transform> targets = new List<Transform>();
 
     public GameObject cannonBall;
     public Transform spawner;
@@ -45,10 +45,11 @@ public class Cannon : MonoBehaviour {
             MoveRight();
         }
 
-        if (Input.GetKeyUp(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             //Instantiate(cannonBall, spawner);
             //shots--;
+            ThrowBall();
         }
 
         if (hits == 5)
@@ -66,7 +67,7 @@ public class Cannon : MonoBehaviour {
 
     private void MoveLeft()
     {
-
+        
     }
 
     private void MoveRight()
@@ -98,5 +99,6 @@ public class Cannon : MonoBehaviour {
     {
         balls[ballsIndex].Fire();
         ballsIndex++;
+        shots--;
     }
 }

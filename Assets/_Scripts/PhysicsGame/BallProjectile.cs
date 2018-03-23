@@ -114,13 +114,13 @@ public class BallProjectile : MonoBehaviour
                 power.value -= (Time.deltaTime * 0.15f);
         }
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        /*if (Input.GetKeyDown(KeyCode.Space))
         {
             //m_isRunning = !m_isRunning;
             //m_rb.velocity = CalculateInitialVelocity(m_targetTransform.position,false);
-            
+            //Fire();
 
-        }
+        }*/
         
 
 
@@ -145,8 +145,6 @@ public class BallProjectile : MonoBehaviour
         {
             
             Destroy(collision.gameObject);
-            _shot.Hit();
-            _shot.Shot();
             sliding = true;
 
             if (lefting)
@@ -160,7 +158,6 @@ public class BallProjectile : MonoBehaviour
         {
             
             sliding = true;
-            _shot.Shot();
 
             if (lefting)
                 maxPow = true;
@@ -176,5 +173,6 @@ public class BallProjectile : MonoBehaviour
         sliding = false;
         m_rb.isKinematic = false;
         GetComponent<SphereCollider>().enabled = true;
+       
     }
 }
