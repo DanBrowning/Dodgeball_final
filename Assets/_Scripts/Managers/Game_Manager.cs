@@ -6,13 +6,16 @@ public class Game_Manager : MonoBehaviour {
 
     static Game_Manager _instance = null;
 
+
+    public float hits;
+
     // Use this for initialization
     void Awake ()
     {
-        if (instance == null)
+        /*if (instance == null)
             instance = this;
         else if (instance != this)
-            Destroy(gameObject);
+            Destroy(gameObject);*/
     }
 
 	
@@ -23,7 +26,7 @@ public class Game_Manager : MonoBehaviour {
 
     public int AddScore(int scoreAmount)
     {
-        scoreAmount += 1;
+        hits++;
 
         return scoreAmount;
     }

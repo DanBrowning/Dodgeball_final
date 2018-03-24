@@ -12,5 +12,5 @@ EditorBuildSettings:
     path: Assets/_Scenes/Dodgeball.unity
     guid: e32d470eedee0bf45b0a239f26fcc0d1
   - enabled: 1
-    path: Assets/_Scenes/GameOver.unity
+    path: Assets/_Scenes/onePlayer.unity
     guid: fb1130d1a35e4744bb891d7b0e778e6e

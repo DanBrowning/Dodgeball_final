@@ -111,6 +111,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10b44b53b9a195b4c980e81dd09c192c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hits: 0
+  score: {fileID: 0}
   m_initialVelocity: {x: 0, y: 0, z: 0}
   m_targetTransform: {fileID: 0}
   minPowSpeed: 0

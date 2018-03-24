@@ -6,13 +6,15 @@ using UnityEngine.UI;
 public class BallProjectile : MonoBehaviour
 {
     private Cannon _shot;
+    
 
     public BallProjectile(Cannon owner)
     {
         _shot = owner;
     }
 
-
+    //public float hits;
+    //public Text score;
 
     //public bool m_isRunning = false;
     private Rigidbody m_rb = null;
@@ -133,7 +135,7 @@ public class BallProjectile : MonoBehaviour
             if (box.GetComponent<AIAgent>().isOut)
                 targetHit++;*/
 
-        
+        //score.text = ("Score: " + hits);
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -150,6 +152,9 @@ public class BallProjectile : MonoBehaviour
             //    minPow = true;
             //Destroy(gameObject);
             GetComponent<Renderer>().enabled = false;
+
+            Cannon hit = GameObject.FindObjectOfType(typeof(Cannon)) as Cannon;
+            hit.Hit();
         }
 
         if (collision.gameObject.tag == "backdrop")
