@@ -34,12 +34,12 @@ public class BasicVelocity : MonoBehaviour {
             m_rb.velocity = m_velocity * -1;
         }
 
-        /*if (_elapsedTime > 1)
+        if (_elapsedTime > 10)
         {
             Debug.Log(m_velocity);
             m_velocity *= -1;
             _elapsedTime = 0;
-        }*/
+        }
     }
 
     

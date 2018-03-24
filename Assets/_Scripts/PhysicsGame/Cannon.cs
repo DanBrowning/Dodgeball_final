@@ -5,13 +5,12 @@ using UnityEngine.UI;
 
 public class Cannon : MonoBehaviour {
 
-    
-
     public float shots;
     public Text remaining;
     public Text score;
 
     public List<Transform> targets = new List<Transform>();
+    private int targetsIndex = 0;
 
     public GameObject cannonBall;
     public Transform spawner;
@@ -52,11 +51,11 @@ public class Cannon : MonoBehaviour {
             ThrowBall();
         }
 
-        if (hits == 5)
+        if (hits >= 5)
         {
             Won();
         }
-        else if (shots == 0)
+        else if (shots <= 0)
         {
             Lost();
         }
@@ -67,12 +66,12 @@ public class Cannon : MonoBehaviour {
 
     private void MoveLeft()
     {
-        
+        targetsIndex--;
     }
 
     private void MoveRight()
     {
-
+        targetsIndex++;
     }
 
     public void Hit()
@@ -97,7 +96,26 @@ public class Cannon : MonoBehaviour {
 
     public void ThrowBall()
     {
-        balls[ballsIndex].Fire();
+        Transform target = null;
+        int startingIndex = targetsIndex;
+
+        for (int i = 0; i > targets.Count; i++)
+        {
+            if (targets[targetsIndex] == null)
+                targetsIndex++;
+            else
+            {
+                target = targets[targetsIndex];
+                break;
+            }
+            if (targetsIndex > targets.Count - 1)
+                targetsIndex = 0;
+            if (targetsIndex == startingIndex)
+                return;
+        }
+
+
+        balls[ballsIndex].Fire(target);
         ballsIndex++;
         shots--;
     }

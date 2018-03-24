@@ -37,7 +37,6 @@ public class BallProjectile : MonoBehaviour
     {
         m_rb = GetComponent<Rigidbody>();
         sliding = true;
-        minPow = true;
     }
 
     Vector3 CalculateInitialVelocityMovingTarget()
@@ -46,7 +45,7 @@ public class BallProjectile : MonoBehaviour
         //aim for that position
         Vector3 targetVelocity = m_movingTarget.GetVelocity();
         Vector3 targetDisplacement = targetVelocity * m_desiredAirTime;
-        Vector3 targetPosition = m_movingTarget.transform.position + targetDisplacement * power.value;
+        Vector3 targetPosition = m_movingTarget.transform.position + targetDisplacement;
         return CalculateInitialVelocity(targetPosition, true);
     }
 
@@ -91,19 +90,19 @@ public class BallProjectile : MonoBehaviour
     void Update()
     {
         Debug.Log(sliding);
-        if (sliding)
-        {
-            if (power.value == power.minValue)
+        //if (sliding)
+        //{
+            if (power.value <= power.minValue + 0.02f)
             {
                 minPow = true;
                 maxPow = false;
-                lefting = false;
+                //lefting = false;
             }
-            else if (power.value == power.maxValue)
+            else if (power.value >= power.maxValue - 0.02f)
             {
                 minPow = false;
                 maxPow = true;
-                lefting = true;
+                //lefting = true;
             }
 
             if (minPow)
@@ -112,7 +111,7 @@ public class BallProjectile : MonoBehaviour
             }
             else if (maxPow)
                 power.value -= (Time.deltaTime * 0.15f);
-        }
+        //}
 
         /*if (Input.GetKeyDown(KeyCode.Space))
         {
@@ -145,34 +144,35 @@ public class BallProjectile : MonoBehaviour
         {
             
             Destroy(collision.gameObject);
-            sliding = true;
+            //sliding = true;
 
-            if (lefting)
-                maxPow = true;
-            else
-                minPow = true;
+            //if (lefting)
+            //    maxPow = true;
+            //else
+            //    minPow = true;
             Destroy(gameObject);
         }
 
         if (collision.gameObject.tag == "backdrop")
         {
             
-            sliding = true;
+            //sliding = true;
 
-            if (lefting)
-                maxPow = true;
-            else
-                minPow = true;
+            //if (lefting)
+            //    maxPow = true;
+            //else
+            //    minPow = true;
             Destroy(gameObject);
         }
     }
 
-    public void Fire()
+    public void Fire(Transform targetTransform)
     {
-        m_rb.velocity = CalculateInitialVelocityMovingTarget();
+        m_targetTransform = targetTransform;
+        m_rb.velocity = CalculateInitialVelocityMovingTarget() * power.value;
         sliding = false;
         m_rb.isKinematic = false;
         GetComponent<SphereCollider>().enabled = true;
-       
+
     }
 }
