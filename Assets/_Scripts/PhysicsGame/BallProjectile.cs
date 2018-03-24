@@ -92,13 +92,13 @@ public class BallProjectile : MonoBehaviour
         Debug.Log(sliding);
         //if (sliding)
         //{
-            if (power.value <= power.minValue + 0.02f)
+            if (power.value <= power.minValue + 0.03f)
             {
                 minPow = true;
                 maxPow = false;
                 //lefting = false;
             }
-            else if (power.value >= power.maxValue - 0.02f)
+            else if (power.value >= power.maxValue - 0.03f)
             {
                 minPow = false;
                 maxPow = true;
@@ -170,7 +170,7 @@ public class BallProjectile : MonoBehaviour
     {
         m_targetTransform = targetTransform;
         m_rb.velocity = CalculateInitialVelocityMovingTarget() * power.value;
-        sliding = false;
+        //sliding = false;
         m_rb.isKinematic = false;
         GetComponent<SphereCollider>().enabled = true;
 
