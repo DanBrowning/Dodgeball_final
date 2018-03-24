@@ -30,6 +30,7 @@ public class Cannon : MonoBehaviour {
     {
         shots = 5;
         hits = 0;
+        targetsIndex = targets.Count;
     }
 
     // Update is called once per frame
@@ -51,7 +52,7 @@ public class Cannon : MonoBehaviour {
             ThrowBall();
         }
 
-        if (hits >= 5)
+        if (hits >= 3)
         {
             Won();
         }
@@ -93,7 +94,7 @@ public class Cannon : MonoBehaviour {
     {
         lost.enabled = true;
     }
-
+    
     public void ThrowBall()
     {
         Transform target = null;
@@ -101,6 +102,7 @@ public class Cannon : MonoBehaviour {
 
         for (int i = 0; i > targets.Count; i++)
         {
+            
             if (targets[targetsIndex] == null)
                 targetsIndex++;
             else
@@ -113,7 +115,6 @@ public class Cannon : MonoBehaviour {
             if (targetsIndex == startingIndex)
                 return;
         }
-
 
         balls[ballsIndex].Fire(target);
         ballsIndex++;

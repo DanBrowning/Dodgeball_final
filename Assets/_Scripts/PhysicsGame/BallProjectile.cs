@@ -150,19 +150,20 @@ public class BallProjectile : MonoBehaviour
             //    maxPow = true;
             //else
             //    minPow = true;
-            Destroy(gameObject);
+            //Destroy(gameObject);
+            GetComponent<Renderer>().enabled = false;
         }
 
         if (collision.gameObject.tag == "backdrop")
         {
-            
+
             //sliding = true;
 
             //if (lefting)
             //    maxPow = true;
             //else
             //    minPow = true;
-            Destroy(gameObject);
+            GetComponent<Renderer>().enabled = false;
         }
     }
 

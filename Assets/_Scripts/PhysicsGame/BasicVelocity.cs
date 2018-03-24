@@ -8,6 +8,7 @@ public class BasicVelocity : MonoBehaviour {
     private Rigidbody m_rb = null;
 
     public bool moveLeft;
+    public bool notMove;
 
     private float _elapsedTime;
 
@@ -28,6 +29,10 @@ public class BasicVelocity : MonoBehaviour {
         if (moveLeft)
         {
             m_rb.velocity = m_velocity;
+        }
+        else if (notMove)
+        {
+            //dont move
         }
         else
         {
