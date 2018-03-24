@@ -92,13 +92,13 @@ public class BallProjectile : MonoBehaviour
         Debug.Log(sliding);
         //if (sliding)
         //{
-            if (power.value <= power.minValue + 0.03f)
+            if (power.value <= power.minValue + 0.02f)
             {
                 minPow = true;
                 maxPow = false;
                 //lefting = false;
             }
-            else if (power.value >= power.maxValue - 0.03f)
+            else if (power.value >= power.maxValue - 0.02f)
             {
                 minPow = false;
                 maxPow = true;
@@ -120,8 +120,6 @@ public class BallProjectile : MonoBehaviour
             //Fire();
 
         }*/
-        
-
 
         //m_rb.useGravity = m_isRunning;
 
@@ -143,7 +141,7 @@ public class BallProjectile : MonoBehaviour
         if (collision.gameObject.tag == "Box")
         {
             
-            Destroy(collision.gameObject);
+            //Destroy(collision.gameObject);
             //sliding = true;
 
             //if (lefting)

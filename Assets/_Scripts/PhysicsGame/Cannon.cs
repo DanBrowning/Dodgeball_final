@@ -23,7 +23,7 @@ public class Cannon : MonoBehaviour {
     public List<BallProjectile> balls = new List<BallProjectile>();
     private int ballsIndex = 0;
 
-    
+    private float timer;
 
     // Use this for initialization
     void Start()
@@ -58,6 +58,8 @@ public class Cannon : MonoBehaviour {
         }
         else if (shots <= 0)
         {
+            //timer += Time.deltaTime;
+            //if (timer > 1.5 && hits < 3)
             Lost();
         }
 
@@ -119,5 +121,6 @@ public class Cannon : MonoBehaviour {
         balls[ballsIndex].Fire(target);
         ballsIndex++;
         shots--;
+        Game_Manager.instance.AddScore(1);
     }
 }
